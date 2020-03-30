@@ -1,3 +1,5 @@
+nativescript_google_maps_api.xml
+
 # NativeScript
 hooks/
 !hooks/after-createProject/*.js
