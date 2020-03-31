@@ -111,7 +111,7 @@ export default {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + appToken
       }
-      console.log(hostUrl + '/api/v1/location/list/');
+      // console.log(hostUrl + '/api/v1/location/list/');
       http.request({
         url: hostUrl + '/api/v1/location/list/',
         method: 'GET',
@@ -123,15 +123,15 @@ export default {
           alert('توکن اپ اشتباه است. لطفا به ارائه دهنده اطلاع دهید');
         } else {
           this.locations = response.content.toJSON();
-          console.log(this.locations);
+          // console.log(this.locations);
           this.loadingLocal = false;
         }
       }, error => {
         this.onNetworkFailure({ func: this.loadLocations, args: [] });
-        console.log(error.message)
+        // console.log(error.message)
       }).catch(error => {
         this.onNetworkFailure({ func: this.loadLocations, args: [] });
-        console.log(error.message)
+        // console.log(error.message)
       })
     }
   },

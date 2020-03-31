@@ -124,7 +124,7 @@ export default {
                     vinst.loadingLocal = false;
                 }).catch((e) => {
                     this.onNetworkFailure({ func: this.setNote, args: [] });
-                    console.log(e)
+                    // console.log(e)
                 })
             }
         },
