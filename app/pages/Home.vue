@@ -3,7 +3,12 @@
     <ActionBar flat="true">
           <Label text="حمایت" horizontalAlignment="center" style="padding: 15; font-size: 20; color: white"/>
     </ActionBar>
-    <GridLayout rows="*, auto" columns="*">
+
+    <NetworkFailure v-if="networkFailureRetryObject" @retryRequest="networkFailureRetry"></NetworkFailure>
+    
+    <ActivityIndicator v-else-if="loadingLocal" width="50" busy="true"></ActivityIndicator>
+
+    <GridLayout v-else rows="*, auto" columns="*">
       <MapView
         v-if="allowExecution"
         row="0"
@@ -37,6 +42,7 @@ import { Position, Marker, Polyline, Bounds } from "nativescript-google-maps-sdk
 export default {
   data() {
     return {
+      loadingLocal: true,
       chosenPosition: {
         latitude: 29.591768,
         longitude: 52.583698
@@ -110,6 +116,8 @@ export default {
       .requestPermissions(permissionsNeeded, "Give it to me!")
       .then(() => this.allowExecution = true)
       .catch(() => this.allowExecution = false);
+    
+    
   }
 };
 </script>
