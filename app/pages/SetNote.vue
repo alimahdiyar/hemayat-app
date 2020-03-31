@@ -12,7 +12,7 @@
             </FlexboxLayout>
             <StackLayout verticalAlignment="middle" v-else class="set-note-container" style="min-width: 300; border-radius: 150;">
                     
-                <Label style="text-align: center; padding-top: 10;" textWrap="true"
+                <Label style="text-align: center; padding-top: 10; color: black;" textWrap="true"
                     text="عنوان مکان (اختیاری)"
                 />
 
@@ -21,7 +21,7 @@
                     v-model="title" />
                 <Label v-show="errors.title" :text="errors.title" class="set-note-input-error-label" textWrap="true" />
                     
-                <Label style="text-align: center; padding-top: 10;" textWrap="true"
+                <Label style="text-align: center; padding-top: 10; color: black;" textWrap="true"
                     text="متن یادداشت"
                 />
 
@@ -32,7 +32,7 @@
                 
                 <GridLayout columns="*, *" rows="auto">
                     <Button col="0" text="تایید" @tap="setNote" class="hemayat-btn" />
-                    <Button col="1" @tap="cancelMe" text="انصراف" />
+                    <Button col="1" @tap="cancelMe" text="انصراف" class="hemayat-cancel-btn" />
                 </GridLayout>
 
             </StackLayout>
@@ -152,6 +152,7 @@ export default {
     margin: 3 10;
     font-size: 15;
     border-radius: 4;
+    color: black;
 }
 .set-note-input-error {
     border-width: 1;
