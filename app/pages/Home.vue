@@ -8,11 +8,9 @@
     
     <ActivityIndicator v-else-if="loadingLocal" width="50" busy="true"></ActivityIndicator>
 
-    <GridLayout v-else rows="*, auto" columns="*">
+    <GridLayout v-else>
       <MapView
         v-if="allowExecution"
-        row="0"
-        col="0"
         width="100%"
         height="100%"
         :latitude="29.591768"

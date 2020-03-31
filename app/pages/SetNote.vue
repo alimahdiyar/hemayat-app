@@ -13,7 +13,7 @@
             <StackLayout verticalAlignment="middle" v-else class="set-note-container" style="min-width: 300; border-radius: 150;">
                     
                 <Label style="text-align: center; padding-top: 10;" textWrap="true"
-                    text="عنوان مکان"
+                    text="عنوان مکان (اختیاری)"
                 />
 
                 <TextField class="set-note-input"
