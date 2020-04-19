@@ -45,7 +45,7 @@
 
 <script>
 import * as http from "tns-core-modules/http";
-import { appToken, hostUrl } from '~/config'
+import { hostUrl } from '~/config'
 
 export default {
     props: [
@@ -93,13 +93,13 @@ export default {
                 }
 
                 http.request({
-                    url: hostUrl + '/api/v1/location/set-note/',
+                    url: hostUrl + '/api/v2/location/set-note/',
                     method: 'PUT',
                     headers: {
                         'Accept-Language': 'fa',
                         'Cache-Control': 'no-cache',
                         'Content-Type': 'application/json',
-                        'Authorization': 'token ' + appToken
+                        'Authorization': 'token ' + this.$store.getters.userToken
                     },
                     content: JSON.stringify(location)
                 }).then(response => {

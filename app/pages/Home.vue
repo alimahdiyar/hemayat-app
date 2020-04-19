@@ -21,8 +21,7 @@
         @mapReady="onMapReady"
         @markerSelect="onMarkerSelect"
       />
-      <!-- <Button v-if="chosenPosition" style="margin: 10 20 10 20" text="تایید" class="hemayat-btn" @tap="submit()" row="1" col="0" /> -->
-      
+
     </GridLayout>
   </Page>
 </template>
@@ -35,7 +34,7 @@ import Vue from 'nativescript-vue';
 import * as permissions from 'nativescript-permissions'
 
 import * as http from "tns-core-modules/http";
-import { appToken, hostUrl } from "~/config";
+import { hostUrl } from "~/config";
 
 import { Position, Marker, Polyline, Bounds } from "nativescript-google-maps-sdk";
 
@@ -109,11 +108,11 @@ export default {
         'Accept-Language': 'fa',
         'Cache-Control': 'no-cache',
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + appToken
+        'Authorization': 'token ' + this.$store.getters.userToken
       }
-      // console.log(hostUrl + '/api/v1/location/list/');
+      // console.log(hostUrl + '/api/v2/location/list/');
       http.request({
-        url: hostUrl + '/api/v1/location/list/',
+        url: hostUrl + '/api/v2/location/list/',
         method: 'GET',
         headers: headers
       }).then(response => {
