@@ -10,6 +10,7 @@
 
     <ScrollView v-else>
       <StackLayout style="padding-bottom: 17">
+        <Label v-if="location.title" :text="location.title" style="font-size: 18; padding-top: 17; text-align: center;" textWrap="true" />
         <StackLayout v-for="note in notes"
           :key="note.pk"
           style="text-align: left; font-size: 18; border-width: 4; border-radius:30;
