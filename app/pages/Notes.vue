@@ -9,10 +9,13 @@
     <ActivityIndicator v-else-if="loadingLocal" width="50" busy="true"></ActivityIndicator>
 
     <ScrollView v-else>
-      <StackLayout>
-        <StackLayout v-for="note in notes" style="text-align: left;">
+      <StackLayout style="padding-bottom: 17">
+        <StackLayout v-for="note in notes"
+          :key="note.pk"
+          style="text-align: left; font-size: 18; border-width: 4; border-radius:30;
+                border-color: #cccccc; padding: 10 20; margin: 17 13 3 13;">
           <Label :text="'سازنده: ' + (note.user_profile ? note.user_profile.username : 'تعیین نشده')" textWrap="true" />
-          <Label :text="'زمان: ' + note.timestamp" textWrap="true" />
+          <Label :text="'زمان: ' + toPersianDateTimeString(note.timestamp)" textWrap="true" />
           <Label :text="note.text" textWrap="true" />
         </StackLayout>
       </StackLayout>      

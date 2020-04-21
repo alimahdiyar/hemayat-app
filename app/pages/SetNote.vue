@@ -22,7 +22,7 @@
                 <Label v-show="errors.title" :text="errors.title" class="set-note-input-error-label" textWrap="true" />
                     
                 <DockLayout style="border-bottom-width: 1; border-top-width: 1; color: black; font-size: 17;
-                padding: 8; margin: 12 10 10 10;" stretchLastChild="true" @tap="$navigateTo($routes.Notes, {props: {location} })">
+                padding: 8; margin: 12 10 10 10;" stretchLastChild="true" @tap="navigateToNotesHistory">
                     <Label class="fas" :text="'fa-angle-left' | fonticon" dock="left" style="padding: 5;color: #777777; font-weight: 400; font-size: 19;" />                    
                     <Label dock="right" style="font-size: 16" text="تاریخچه" textWrap="true" />
                 </DockLayout>
@@ -71,8 +71,12 @@ export default {
         }
     },
     methods: {
+        navigateToNotesHistory(){
+            this.$navigateTo(this.$routes.Notes, {props: {location: this.location} })
+            this.$modal.close();
+        },
         cancelMe(){
-            this.$modal.close()
+            this.$modal.close();
         },
         async setNote(){
             

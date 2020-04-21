@@ -28,8 +28,8 @@ export default {
         args
       }
     },
-    persianDateTimeToString (dateFromAPI) {
-      return this.toPersianNumber(this.moment(dateFromAPI, 'YYYY-M-DTHH:mm:ss').format('YYYY/MM/DD HH:mm'))
+    toPersianDateTimeString (dateFromAPI) {
+      return this.toPersianNumber(this.moment.from(dateFromAPI, 'en', 'YYYY-M-DTHH:mm:ss').format('YYYY/MM/DD HH:mm'))
     },
     toPersianNumber (str) {
       return str.replace(new RegExp('0', 'g'), '۰')
