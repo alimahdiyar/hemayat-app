@@ -28,6 +28,22 @@ export default {
         args
       }
     },
+    persianDateTimeToString (dateFromAPI) {
+      return this.toPersianNumber(this.moment(dateFromAPI, 'YYYY-M-DTHH:mm:ss').format('YYYY/MM/DD HH:mm'))
+    },
+    toPersianNumber (str) {
+      return str.replace(new RegExp('0', 'g'), '۰')
+        .replace(new RegExp('1', 'g'), '۱')
+        .replace(new RegExp('2', 'g'), '۲')
+        .replace(new RegExp('3', 'g'), '۳')
+        .replace(new RegExp('4', 'g'), '۴')
+        .replace(new RegExp('5', 'g'), '۵')
+        .replace(new RegExp('6', 'g'), '۶')
+        .replace(new RegExp('7', 'g'), '۷')
+        .replace(new RegExp('8', 'g'), '۸')
+        .replace(new RegExp('9', 'g'), '۹')
+        .replace(new RegExp('%', 'g'), '٪')
+    },
     toEnglishNumber (str) {
       return str.replace(new RegExp('۰', 'g'), '0')
         .replace(new RegExp('۱', 'g'), '1')

@@ -94,7 +94,7 @@ export default {
                     vinst.loadingLocal = false;
                 }).catch((error) => {
                     this.onNetworkFailure({ func: this.login, args: [] });
-                    // console.log(error)
+                    console.log(error)
                 })
 
             }
@@ -118,8 +118,9 @@ export default {
     padding: 5 10;
 }
 .new-user-input {
-    height: 40;
-    padding: 0 5;
+    padding: 10 5;
+    border-width: 1;
+    border-color: #aaaaaa;
     margin: 3 10;
     font-size: 15;
     border-radius: 4;

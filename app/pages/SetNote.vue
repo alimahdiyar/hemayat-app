@@ -1,5 +1,5 @@
 <template>
-        <Page actionBarHidden="true" style="width: 300; border-radius: 150; background-color: transparent">
+        <Page actionBarHidden="true" style="border-radius: 150; background-color: transparent">
 
             <DockLayout stretchLastChild="false">
             <Label dock="top" text="ثبت / ویرایش یادداشت" style="font-size: 16; font-weight: bold;padding: 15; color: white; background-color: blue;"/>
@@ -21,7 +21,13 @@
                     v-model="title" />
                 <Label v-show="errors.title" :text="errors.title" class="set-note-input-error-label" textWrap="true" />
                     
-                <Label style="text-align: center; padding-top: 10; color: black;" textWrap="true"
+                <DockLayout style="border-bottom-width: 1; border-top-width: 1; color: black; font-size: 17;
+                padding: 8; margin: 12 10 10 10;" stretchLastChild="true" @tap="$navigateTo($routes.Notes, {props: {location} })">
+                    <Label class="fas" :text="'fa-angle-left' | fonticon" dock="left" style="padding: 5;color: #777777; font-weight: 400; font-size: 19;" />                    
+                    <Label dock="right" style="font-size: 16" text="تاریخچه" textWrap="true" />
+                </DockLayout>
+
+                <Label style="text-align: center; color: black;" textWrap="true"
                     text="متن یادداشت"
                 />
 
@@ -124,13 +130,14 @@ export default {
                     vinst.loadingLocal = false;
                 }).catch((e) => {
                     this.onNetworkFailure({ func: this.setNote, args: [] });
-                    // console.log(e)
+                    console.log(e)
                 })
             }
         },
     },
     created(){
-        
+        console.log(this.location.latitude)
+        console.log(this.location.longitude)
     }
 }
 </script>

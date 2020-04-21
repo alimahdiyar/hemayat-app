@@ -119,7 +119,8 @@ export default {
         // console.log('dataLoader fetchData action for ' + dataModel.label)
         // console.log(response.content.toString())
         if (response.statusCode === 401) {
-          alert('توکن اپ اشتباه است. لطفا به ارائه دهنده اطلاع دهید');
+          alert('توکن شما اشتباه است. لطفا به ارائه دهنده اطلاع دهید');
+          this.$store.dispatch('logout');
         } else {
           this.locations = response.content.toJSON();
           // console.log(this.locations);
@@ -127,10 +128,10 @@ export default {
         }
       }, error => {
         this.onNetworkFailure({ func: this.loadLocations, args: [] });
-        // console.log(error.message)
+        console.log(error.message)
       }).catch(error => {
         this.onNetworkFailure({ func: this.loadLocations, args: [] });
-        // console.log(error.message)
+        console.log(error.message)
       })
     }
   },
