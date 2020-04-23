@@ -73,7 +73,7 @@ export default {
                 this.loadingLocal = true;
                 const vinst = this;
                 http.request({
-                    url: hostUrl + '/api/v2/obtain-auth-token/',
+                    url: hostUrl + '/api/v3/obtain-auth-token/',
                     method: "POST",
                     headers: {
                         'Cache-Control': 'no-cache',

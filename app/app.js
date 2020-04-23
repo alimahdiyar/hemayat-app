@@ -25,6 +25,7 @@ Vue.filter('fonticon', fonticon)
 Vue.mixin(utilsMixin)
 Vue.prototype.$routes = routes
 Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView)
+Vue.registerElement('DropDown', () => require('nativescript-drop-down/drop-down').DropDown)
 Vue.config.silent = (TNS_ENV === 'production') || vueConfigScilent
 
 store.dispatch('initDatabase').then(() => {

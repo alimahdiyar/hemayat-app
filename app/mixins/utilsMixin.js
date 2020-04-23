@@ -7,6 +7,9 @@ export default {
     isAuthenticated () {
       return this.$store.getters.isAuthenticated
     },
+    noteTypes () {
+      return this.$store.getters.noteTypes
+    },
   },
   data () {
     return {

@@ -16,6 +16,7 @@
           style="text-align: left; font-size: 18; border-width: 4; border-radius:30;
                 border-color: #cccccc; padding: 10 20; margin: 17 13 3 13;">
           <Label :text="'سازنده: ' + (note.user_profile ? note.user_profile.username : 'تعیین نشده')" textWrap="true" />
+          <Label :text="'نوع: ' + noteTypeTitle(note)" textWrap="true" />
           <Label :text="'زمان: ' + toPersianDateTimeString(note.timestamp)" textWrap="true" />
           <Label :text="note.text" textWrap="true" />
         </StackLayout>
@@ -38,6 +39,16 @@ export default {
     'location'
   ],
   methods: {
+    noteTypeTitle(note){
+        if(!note.note_type){
+            return 'تعیین نشده';
+        }
+        for (let i = 0; i < this.noteTypes.length; i++) {
+            if(this.noteTypes[i].pk == note.note_type) {
+                return this.noteTypes[i].title;
+            }
+        }
+    },
     loadNotes(){
       const headers = {
         'Accept-Language': 'fa',
@@ -45,9 +56,8 @@ export default {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.$store.getters.userToken
       }
-      console.log(this.location);
       http.request({
-        url: hostUrl + '/api/v2/location/notes/list/',
+        url: hostUrl + '/api/v3/location/notes/list/',
         method: 'POST',
         headers: headers,
         content: JSON.stringify(this.location)

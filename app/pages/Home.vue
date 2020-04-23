@@ -110,9 +110,9 @@ export default {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.$store.getters.userToken
       }
-      // console.log(hostUrl + '/api/v2/location/list/');
+      // console.log(hostUrl + '/api/v3/location/list/');
       http.request({
-        url: hostUrl + '/api/v2/location/list/',
+        url: hostUrl + '/api/v3/location/list/',
         method: 'GET',
         headers: headers
       }).then(response => {
@@ -133,9 +133,40 @@ export default {
         this.onNetworkFailure({ func: this.loadLocations, args: [] });
         console.log(error.message)
       })
+    },
+    loadNoteTypes(){
+      const headers = {
+        'Accept-Language': 'fa',
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + this.$store.getters.userToken
+      }
+      // console.log(hostUrl + '/api/v3/location/list/');
+      http.request({
+        url: hostUrl + '/api/v3/note-types/',
+        method: 'GET',
+        headers: headers
+      }).then(response => {
+        // console.log('dataLoader fetchData action for ' + dataModel.label)
+        // console.log(response.content.toString())
+        if (response.statusCode === 401) {
+          alert('توکن شما اشتباه است. لطفا به ارائه دهنده اطلاع دهید');
+          this.$store.dispatch('logout');
+        } else {
+          this.$store.commit('updateNoteTypes', response.content.toJSON());
+          this.loadLocations();
+        }
+      }, error => {
+        this.onNetworkFailure({ func: this.loadNoteTypes, args: [] });
+        console.log(error.message)
+      }).catch(error => {
+        this.onNetworkFailure({ func: this.loadNoteTypes, args: [] });
+        console.log(error.message)
+      })
     }
   },
   created(){
+    this.loadNoteTypes();
     /* dont run the android permissions routine for iOS */
     if (platform.isIOS) {
       this.allowExecution = true;
@@ -148,11 +179,9 @@ export default {
     ];
     /* showing up permissions dialog */
     permissions
-      .requestPermissions(permissionsNeeded, "Give it to me!")
+      .requestPermissions(permissionsNeeded, "اجازه دسترسی")
       .then(() => this.allowExecution = true)
-      .catch(() => this.allowExecution = false);
-    
-    this.loadLocations();
+      .catch(() => this.allowExecution = false); 
   }
 };
 </script>

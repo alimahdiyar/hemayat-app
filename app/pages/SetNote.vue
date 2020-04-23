@@ -12,7 +12,7 @@
             </FlexboxLayout>
             <StackLayout verticalAlignment="middle" v-else class="set-note-container" style="min-width: 300; border-radius: 150;">
                     
-                <Label style="text-align: center; padding-top: 10; color: black;" textWrap="true"
+                <Label style="text-align: center; padding-top: 7; color: black;" textWrap="true"
                     text="عنوان مکان (اختیاری)"
                 />
 
@@ -22,21 +22,33 @@
                 <Label v-show="errors.title" :text="errors.title" class="set-note-input-error-label" textWrap="true" />
                     
                 <DockLayout style="border-bottom-width: 1; border-top-width: 1; color: black; font-size: 17;
-                padding: 8; margin: 12 10 10 10;" stretchLastChild="true" @tap="navigateToNotesHistory">
+                padding: 8; margin: 12 10 4 10;" stretchLastChild="true" @tap="navigateToNotesHistory">
                     <Label class="fas" :text="'fa-angle-left' | fonticon" dock="left" style="padding: 5;color: #777777; font-weight: 400; font-size: 19;" />                    
                     <Label dock="right" style="font-size: 16" text="تاریخچه" textWrap="true" />
                 </DockLayout>
 
                 <Label style="text-align: center; color: black;" textWrap="true"
-                    text="متن یادداشت"
+                    text="نوع یادداشت"
                 />
+                
+                <GridLayout rows="auto" style="border-color: #cccccc; border-radius: 10; border-width: 1; margin: 3 10 7 10">
+                    <DropDown :selectedIndex="noteTypeIndex" ref="noteTypesdd" style="text-align: left; padding: 7 5; font-size: 15; color: black;"
+                        @loaded="updatenoteTypesddSelectedIndex"
+                        @selectedIndexChanged="changeNoteType"
+                            id="noteTypesdd" :items="noteTypesList" />
+                </GridLayout>
 
                 <TextView class="set-note-input" style="height: 100;"
                     :class="{'set-note-input-error': errors.note_text}"
-                    v-model="note_text" />
+                    hint="متن یادداشت"
+                    v-model="note_text"
+                    @loaded="(args) => {
+                            args.object.focus();
+                            args.object.style.placeholderColor='#aaaaaa';
+                        }" />
                 <Label v-show="errors.note_text" :text="errors.note_text" class="set-note-input-error-label" textWrap="true" />
                 
-                <GridLayout columns="*, *" rows="auto">
+                <GridLayout columns="*, *" rows="auto" style="padding-top: 3">
                     <Button col="0" text="تایید" @tap="setNote" class="hemayat-btn" />
                     <Button col="1" @tap="cancelMe" text="انصراف" class="hemayat-cancel-btn" />
                 </GridLayout>
@@ -52,8 +64,33 @@
 <script>
 import * as http from "tns-core-modules/http";
 import { hostUrl } from '~/config'
-
+import noteTypeDropDownMixin from '~/mixins/noteTypeDropDownMixin'
 export default {
+    mixins: [
+        noteTypeDropDownMixin
+    ],
+    computed: {
+        noteTypeIndex(){
+            if(!this.location.note_type){
+                return 0;
+            }
+            for (let i = 0; i < this.noteTypes.length; i++) {
+                if(this.noteTypes[i].pk == this.location.note_type) {
+                    return i + 1;
+                }
+            }
+        },
+        noteTypeTitle(){
+            if(!this.location.note_type){
+                return 'تعیین نشده';
+            }
+            for (let i = 0; i < this.noteTypes.length; i++) {
+                if(this.noteTypes[i].pk == this.location.note_type) {
+                    return this.noteTypes[i].title;
+                }
+            }
+        }
+    },
     props: [
         'location',
         'addNewLocationFunc',
@@ -62,6 +99,7 @@ export default {
         return {
             title: this.location.title,
             note_text: this.location.note_text,
+            note_type: this.location.note_type,
             loadingLocal: false,
             verificationCode: '',
             errors: {
@@ -71,6 +109,9 @@ export default {
         }
     },
     methods: {
+        changeNoteType(args){
+            this.note_type = this.noteTypesList.getValue(args.newIndex);
+        },
         navigateToNotesHistory(){
             this.$navigateTo(this.$routes.Notes, {props: {location: this.location} })
             this.$modal.close();
@@ -102,8 +143,12 @@ export default {
                     longitude: this.location.longitude
                 }
 
+                if(this.note_type){
+                    location.note_type = this.note_type;
+                }
+
                 http.request({
-                    url: hostUrl + '/api/v2/location/set-note/',
+                    url: hostUrl + '/api/v3/location/set-note/',
                     method: 'PUT',
                     headers: {
                         'Accept-Language': 'fa',
@@ -118,6 +163,7 @@ export default {
                         if(this.location.pk){
                             this.location.title = new_location.title
                             this.location.note_text = new_location.note_text
+                            this.location.note_type = new_location.note_type
                         } else {
                             this.addNewLocationFunc(new_location)
                         }
@@ -140,8 +186,8 @@ export default {
         },
     },
     created(){
-        console.log(this.location.latitude)
-        console.log(this.location.longitude)
+        // console.log(this.location.latitude)
+        // console.log(this.location.longitude)
     }
 }
 </script>
